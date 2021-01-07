@@ -1,5 +1,10 @@
 <template>
 	<view>
+    <!-- 搜索组件 -->
+    <view class="search-box">
+      <my-search @click="gotoSearch"></my-search>
+    </view>
+    
 		<!-- 轮播图的区域 -->
      <!-- indicator-dots 小圆点  autoplay 自动轮播  interval轮播的间隔  duration每张轮播的耗时   circular 衔接滚动 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
@@ -104,6 +109,11 @@
          })
        })
        this.floorList = res.message
+       },
+       gotoSearch() {
+         uni.navigateTo({
+           url: '/subpkg/search/search'
+         })
        }
     },
     }
@@ -139,5 +149,11 @@
 .floor-img-box {
   display: flex;
   padding-left: 10rpx;
+}
+.search-box {
+  // 粘性定位 “固定”在离它最近的一个拥有“滚动机制”的祖先上
+  position: sticky;
+  top: 0;
+  z-index: 999; // 防止被轮播图覆盖
 }
 </style>
