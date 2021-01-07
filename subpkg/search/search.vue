@@ -60,12 +60,10 @@
           this.searchResults = []
           return
         }
-        const {
-          data: res
-        } = await uni.$http.get('/api/public/v1/goods/qsearch', {
-          query: this.kw
-        })
-        console.log(res)
+        // const {data: res} = await uni.$http.get('/api/public/v1/goods/qsearch', {
+        //   query: this.kw })
+          const {data: res} = await uni.$http.get(`/api/public/v1/goods/qsearch?query=${this.kw}`)
+        // console.log(res)
         if (res.meta.status !== 200) return uni.$showMsg()
         this.searchResults = res.message
 
