@@ -25,7 +25,34 @@ export default {
     },
     saveToStorage(state) {
       uni.setStorageSync('cart', JSON.stringify(state.cart))
+    },
+    // 更新购物车中商品的勾选状态  参数goods是外界传过来的商品信息对象
+    updateGoodsState(state,goods) {
+      // 根据 goods_id 查询购物车中对应商品的信息对象
+    const findResult = state.cart.find(x => x.goods_id === goods.goods_id)
+      // 有对应的商品信息对象
+    if(findResult) {
+       // 更新对应商品的勾选状态
+      findResult.goods_state = goods.goods_state
+          // 持久化存储到本地
+       this.commit('m_cart/saveToStorage')
+     }
+    },
+    // 更新商品的数量
+    updateGoodsCount(state,goods) {
+      const findResult= state.cart.find(x => x.goods_id === goods.goods_id)
+      
+      if(findResult) {
+        findResult.goods_count = goods.goods_count
+         this.commit('m_cart/saveToStorage')
+      }
+    },
+    // 根据 id 删除对应的商品
+    removeGoodsByID(state, goods_id) {
+    state.cart = state.cart.filter(x => x.goods_id !== goods_id)
+    this.commit('m_cart/saveToStorage')
     }
+     
   },
 
   // 模块的 getters 属性
