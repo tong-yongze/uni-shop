@@ -51,16 +51,34 @@ export default {
     removeGoodsByID(state, goods_id) {
     state.cart = state.cart.filter(x => x.goods_id !== goods_id)
     this.commit('m_cart/saveToStorage')
+    },
+    // 更新所有商品的勾选状态
+    updateAllGoodsState(state,newState) {
+        // 循环更新购物车中每件商品的勾选状态
+      state.cart.forEach(x => x.goods_state = newState) 
     }
      
   },
 
   // 模块的 getters 属性
   getters: {
+    // 购物车中所有商品的总数量
     total(state) {
-      let c = 0
-      state.cart.forEach(goods => c += goods.goods_count)
-      return c
+      // let c = 0
+      // state.cart.forEach(goods => c += goods.goods_count)
+      // return c
+    return  state.cart.reduce((total, item) => total += item.goods_count, 0)
+    },
+    // 购物车已勾选的总数量
+    checkedCount(state) {
+       // 先使用 filter 方法，从购物车中过滤器已勾选的商品
+        // 再使用 reduce 方法，将已勾选的商品总数量进行累加
+        // reduce() 的返回值就是已勾选的商品的总数量
+      return state.cart.filter(x => x.goods_state).reduce((total, item) => total += item.goods_count,0)
+    },
+    // 已勾选商品的总价格
+    checkedGoodsAmount(state) {
+     return state.cart.filter(x => x.goods_state).reduce((total, item) => total += item.goods_count * item.goods_price,0).toFixed(2)
     }
   },
 }

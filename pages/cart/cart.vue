@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="cart-container" v-if="cart.length !== 0">
     <!-- 收获地址组件 -->
     <my-address></my-address>
 
@@ -18,8 +18,15 @@
      </block>
    </uni-swipe-action>
    
-   
+   <!-- 自定义的结算组件 -->
+   <my-settle></my-settle>
   </view>
+  
+   <!-- 空白购物车的区域 -->
+   <view class="empty-cart" v-else>
+     <image src="/static/cart_empty@2x.png" class="empty-img"></image>
+     <text class="tip-text">空空如也!</text>
+   </view>
 </template>
 
 <script>
@@ -61,6 +68,9 @@ import { mapState, mapMutations} from 'vuex'
 </script>
 
 <style lang="scss">
+  .cart-container {
+    padding-bottom: 50px;
+  }
 .cart-title {
   display: flex;
   align-items: center;
@@ -71,5 +81,21 @@ import { mapState, mapMutations} from 'vuex'
      .cart-title-text {
          margin-left: 10px;
        }
+}
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 150px;
+  .empty-img {
+    width: 100px;
+    height: 100px;
+  }
+  .tip-text {
+    font-size: 12px;
+    color: gray;
+    margin-top: 15px;
+  }
 }
 </style>
