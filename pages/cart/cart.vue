@@ -1,5 +1,8 @@
 <template>
   <view>
+    <!-- 收获地址组件 -->
+    <my-address></my-address>
+
    <!-- 商品列表的标题区域 -->
    <view class="cart-title">
      <uni-icons type="shop" size="18"></uni-icons>
